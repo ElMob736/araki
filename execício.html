@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercício 6</title>
+</head>
+<body>
+
+  <script>
+    var salario, aumento, novoSalarioBruto, desconto, salarioLiquedo
+    //solicito que o usuário informe o salario
+   salario = Number(prompt("qual seu salario: "))
+   
+    //calculoo aumento e somao o aumento ao salário (antigo)
+    aumento = salario * 15 / 100 //descobre quanto é 15%
+    
+    novoSalarioBruto = salario + aumento
+    //calculo o desconto e subtraio o desconto do salrio bruto
+    desconto = novoSalarioBruto * 8 / 100 //desconto quanto é 8%
+
+    salario = novoSalarioBruto - desconto
+
+    console.log (`salario: ${salario}`)
+    console.log (`aumento: ${aumento}`)
+    console.log (`novoSalarioBruto: ${novoSalarioBruto}`)
+    console.log (`desconto: ${desconto}`)
+    console.log (`salarioLiquedo: ${salarioLiquedo}`)
+  </script>
+
+</body>
+</html>
+
