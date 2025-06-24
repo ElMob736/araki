@@ -1,0 +1,18 @@
+let nivel = Number(prompt("Digite o nível:\n1 - Nível 1\n2 - Nível 2\n3 - Nível 3"));
+let horasTrabalhadas = Number(prompt("Digite a quantidade de horas trabalhadas:"));
+let salario;
+
+if (nivel == 1) {
+  salario = horasTrabalhadas * 12;
+} else if (nivel == 2) {
+  salario = horasTrabalhadas * 17;
+} else if (nivel == 3) {
+  salario = horasTrabalhadas * 25;
+} else {
+  alert("Nível inválido!");
+}
+
+// Mostrar o salário apenas se o nível for válido
+if (nivel >= 1 && nivel <= 3) {
+  alert("O salário final é: R$ " + salario.toFixed(2));
+}
