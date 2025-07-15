@@ -1,0 +1,53 @@
+for(let x = 10; x >= 0; x--){
+    if (x != 0){
+        alert(x)
+    }
+    else{
+         alert("feliz ano novo")
+    }
+
+}
+
+
+---------------------------------__________________________________----------------------------------------------------------------------------
+
+
+var somaMultiplosDe3 = 0; 
+var somaMultiplosDe3 = Number(prompt("multiplo de: "))
+for (let x = 1; x <= 500; x++) {
+    if (x % 3 === 0) { 
+        somaMultiplosDe3 = somaMultiplosDe3 + x; 
+    }
+}
+alert(somaMultiplosDe3);
+
+
+
+------------------------------------------------_____________________________________---------------------------------------------------------------------------
+
+
+
+var menorAltura = Infinity;
+var maiorAltura = -Infinity;
+
+for (let i = 1; i <= 15; i++) {
+  var altura = Number(prompt(`Digite a altura da pessoa ${i} (em metros):`));
+
+ 
+  if (altura < menorAltura) {
+    menorAltura = altura;
+  }
+
+ 
+  if (altura > maiorAltura) {
+    maiorAltura = altura;
+  }
+}
+
+alert("Menor altura: " + menorAltura.toFixed(2) + "m");
+alert("Maior altura: " + maiorAltura.toFixed(2) + "m");
+
+
+
+
+--------------------------------------------------______________________________________________________-------------------------------------------
