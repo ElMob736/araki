@@ -51,3 +51,71 @@ alert("Maior altura: " + maiorAltura.toFixed(2) + "m");
 
 
 --------------------------------------------------______________________________________________________-------------------------------------------
+
+
+
+var menorAltura = Infinity;
+var maiorAltura = -Infinity;
+
+for (let i = 1; i <= 15; i++) {
+  var altura = Number(prompt(`Digite a altura da pessoa :`));
+
+ 
+  if (altura < menorAltura) {
+    menorAltura = altura;
+  }
+
+ 
+  if (altura > maiorAltura) {
+    maiorAltura = altura;
+  }
+}
+
+alert("Menor altura: " + menorAltura);
+alert("Maior altura: " + maiorAltura);
+
+
+------------------------------------________________________________________________________------------------------------------------------
+
+
+3
+var A = Number(prompt("Digite um número para calcular o fatorial:"));
+var resultado = 1;
+var sequencia = "";
+
+for (var i = A; i >= 1; i--) {
+  resultado *= i;
+  
+  if (i === 1) {
+    sequencia += i;
+  } else {
+    sequencia += i + " x ";
+  }
+}
+
+alert(A + "! = " + sequencia + " = " + resultado);
+
+--------------------------__________________________________________________________________------------------------------------------
+
+
+
+
+var negativos = 0;
+
+for (var i = 1; i <= 5; i++) {
+  var a = Number(prompt("Digite o valor " + i + ":"));
+
+  if (a < 0) {
+    negativos++;
+  }
+}
+
+alert("Quantidade de valores negativos: " + negativos);
+
+
+
+--------------------------------___________________________________________________________________________________________________--------------------------------
+
+
+
+
