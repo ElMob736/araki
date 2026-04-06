@@ -1,0 +1,251 @@
+ATIVIDADE 1
+
+class Retangulo {
+    constructor(largura, altura) {
+      this.largura = largura;
+      this.altura = altura;
+    }
+  
+    calcularArea() {
+      return this.largura * this.altura;
+    }
+  
+    calcularPerimetro() {
+      return 2 * (this.largura + this.altura);
+    }
+  }
+-----------------------------------------------------------
+
+ATIVIDADE 2
+
+class Usuario {
+    constructor(nome, senha) {
+      this.nome = nome;
+      this.senha = senha;
+    }
+  
+    login(senhaInformada) {
+      return this.senha === senhaInformada;
+    }
+  }
+--------------------------------------------------
+
+ATIVIDADE 3
+
+class Carrinho {
+  constructor() {
+    this.produtos = [];
+  }
+
+  adicionar(produto) {
+    this.produtos.push(produto);
+  }
+
+  remover(nome) {
+    this.produtos = this.produtos.filter(p => p.nome !== nome);
+  }
+
+  calcularTotal() {
+    return this.produtos.reduce((total, p) => {
+      return total + (p.preco * p.quantidade);
+    }, 0);
+  }
+}
+---------------------------------------------------------------------------
+
+ATIVIDADE 4 
+
+class Funcionario {
+  constructor(nome, salarioBase) {
+    this.nome = nome;
+    this.salarioBase = salarioBase;
+  }
+
+  calcularSalario() {
+    return this.salarioBase;
+  }
+}
+
+class Desenvolvedor extends Funcionario {
+  calcularSalario() {
+    return this.salarioBase * 1.2; // bônus
+  }
+}
+
+class Designer extends Funcionario {
+  calcularSalario() {
+    return this.salarioBase * 1.1;
+  }
+}
+--------------------------------------------------------
+
+ATIVIDADE 5
+
+class Conta {
+  constructor(titular, saldo = 0) {
+    this.titular = titular;
+    this.saldo = saldo;
+  }
+
+  depositar(valor) {
+    this.saldo += valor;
+  }
+
+  sacar(valor) {
+    if (valor > this.saldo) {
+      console.log("Saldo insuficiente");
+      return false;
+    }
+    this.saldo -= valor;
+    return true;
+  }
+
+  transferir(valor, contaDestino) {
+    if (this.sacar(valor)) {
+      contaDestino.depositar(valor);
+    }
+  }
+}
+--------------------------------------------------
+
+ATIVIDADE 6
+
+class Produto {
+  constructor(nome, estoque) {
+    this.nome = nome;
+    this.estoque = estoque;
+  }
+
+  vender(qtd) {
+    if (qtd > this.estoque) {
+      console.log("Estoque insuficiente");
+      return false;
+    }
+    this.estoque -= qtd;
+    return true;
+  }
+
+  repor(qtd) {
+    this.estoque += qtd;
+  }
+}
+-----------------------------------------
+
+ATIVIDADE 7
+
+class Livro {
+  constructor(titulo) {
+    this.titulo = titulo;
+    this.disponivel = true;
+  }
+}
+
+class Biblioteca {
+  constructor() {
+    this.livros = [];
+  }
+
+  adicionarLivro(livro) {
+    this.livros.push(livro);
+  }
+
+  emprestar(titulo) {
+    const livro = this.livros.find(l => l.titulo === titulo);
+    if (livro && livro.disponivel) {
+      livro.disponivel = false;
+      return true;
+    }
+    return false;
+  }
+
+  devolver(titulo) {
+    const livro = this.livros.find(l => l.titulo === titulo);
+    if (livro) livro.disponivel = true;
+  }
+}
+------------------------------------------------------------------
+
+ATIVIDADE 8
+
+class Forma {
+  calcularArea() {
+    throw new Error("Método deve ser implementado");
+  }
+}
+
+class Quadrado extends Forma {
+  constructor(lado) {
+    super();
+    this.lado = lado;
+  }
+
+  calcularArea() {
+    return this.lado ** 2;
+  }
+}
+
+class Circulo extends Forma {
+  constructor(raio) {
+    super();
+    this.raio = raio;
+  }
+
+  calcularArea() {
+    return Math.PI * this.raio ** 2;
+  }
+}
+---------------------------------------------------
+
+ATIVIDADE 9
+
+class SistemaLogin {
+  constructor() {
+    this.usuarios = [];
+  }
+
+  cadastrar(email, senha) {
+    const existe = this.usuarios.find(u => u.email === email);
+    if (existe) {
+      console.log("Usuário já existe");
+      return false;
+    }
+    this.usuarios.push({ email, senha });
+    return true;
+  }
+
+  login(email, senha) {
+    return this.usuarios.some(u => u.email === email && u.senha === senha);
+  }
+}
+-----------------------------------------------------------------
+
+ATIVIDADE 10 
+
+class ProdutoPedido {
+  constructor(nome, preco) {
+    this.nome = nome;
+    this.preco = preco;
+  }
+}
+
+class Pedido {
+  constructor(cliente) {
+    this.cliente = cliente;
+    this.produtos = [];
+  }
+
+  adicionarProduto(produto) {
+    this.produtos.push(produto);
+  }
+
+  calcularTotal() {
+    let total = this.produtos.reduce((soma, p) => soma + p.preco, 0);
+
+    // desconto de 10% se passar de 100
+    if (total > 100) {
+      total *= 0.9;
+    }
+
+    return total;
+  }
+}
