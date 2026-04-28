@@ -1,0 +1,44 @@
+import express from 'express'; // Importa o framework
+const app = express(); // Inicializa a aplicação
+import { filmes, clientes } from './banco-fake.js'
+
+// Habilita o servidor a entender dados em formato JSON
+app.use(express.json());
+
+// Define uma rota do tipo GET no endereço /home
+app.get('/filmes', (request, response) => {
+    return response.json(filmes);
+});
+
+app.get('/filmes/:genero', (request, response) => {
+    const genero_comp = request.params.genero;
+
+    const fimes_filtrados = filmes.filter(f => f.genero === genero_comp)
+    return response.json(fimes_filtrados);
+});
+
+app.post('/clientes', (request, response) => {
+    const { nome, email } = req.body;
+
+    if (!nome || !email) {
+        return res.status(400).json({
+            erro: 'Nome e email são obrigatórios'
+        });
+    }
+
+    // Criando novo cliente
+    const novoCliente = {
+        id: idAtual++,
+        nome,
+        email
+    };
+
+    // Adicionando ao array
+    clientes.push(novoCliente);
+
+    // Retornando resposta
+    res.status(201).json(novoCliente);
+});
+
+// Faz o servidor "escutar" requisições na porta 3333
+app.listen(3333, () => console.log("Servidor rodando na porta 3333"));
