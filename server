@@ -42,3 +42,175 @@ app.post('/clientes', (request, response) => {
 
 // Faz o servidor "escutar" requisições na porta 3333
 app.listen(3333, () => console.log("Servidor rodando na porta 3333"));
+-----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+import express from 'express';
+import pool from './db.js';
+
+const app = express();
+app.use(express.json());
+
+// ROTA DE LISTAGEM (READ)
+app.get('/livros', async (req, res) => {
+    try {
+        // Executamos a query SQL
+        const resultado = await pool.query('SELECT * FROM livros');
+        return res.json(resultado.rows);
+    } catch (err) {
+        return res.status(500).json({ erro: "Erro no banco de dados", err });
+    }
+});
+
+// ROTA DE CRIAÇÃO (CREATE)
+app.post('/livros', async (req, res) => {
+    const { nome, email } = req.body;
+    try {
+        const novoUsuario = await pool.query(
+            'INSERT INTO livros (titulo, autor, ano, disponivel) VALUES ($1, $2, $3, $4) RETURNING *',
+            [titulo, autor, ano, disponivel]
+        );
+        return res.status(201).json(novoUsuario.rows[0]);
+    } catch (err) {
+        return res.status(500).json({ erro: "Erro ao salvar" });
+    }
+});
+
+app.get('/livros/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const resultado = await pool.query(
+            'SELECT * FROM livros WHERE id = $1',
+            [id]
+        );
+
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ erro: 'Livro não encontrado' });
+        }
+
+        return res.status(200).json(resultado.rows[0]);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ erro: 'Erro no banco de dados' });
+    }
+});
+
+
+app.delete('/livros/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const resultado = await pool.query(
+            'DELETE FROM livros WHERE id = $1 RETURNING *',
+            [id]
+        );
+
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ erro: 'Livro não encontrado' });
+        }
+
+        return res.status(200).json({
+            mensagem: 'Livro deletado com sucesso',
+            livro: resultado.rows[0],
+        });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ erro: 'Erro ao deletar livro' });
+    }
+});
+
+
+app.post('/livros', async (req, res) => {
+    const { titulo, autor, ano, disponivel } = req.body;
+
+    try {
+        const novoLivro = await pool.query(
+            'INSERT INTO livros (titulo, autor, ano, disponivel) VALUES ($1, $2, $3, $4) RETURNING *',
+            [titulo, autor, ano, disponivel]
+        );
+
+        return res.status(201).json(novoLivro.rows[0]);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ erro: "Erro ao salvar" });
+    }
+});
+
+
+app.put('/livros/:id', async (req, res) => {
+    const { id } = req.params;
+    const { titulo, autor, ano, disponivel } = req.body;
+
+    // Validação básica
+    if (!titulo || !autor || !ano || disponivel === undefined) {
+        return res.status(400).json({
+            erro: 'Todos os campos são obrigatórios'
+        });
+    }
+
+    try {
+        const resultado = await pool.query(
+            `UPDATE livros 
+       SET titulo = $1, autor = $2, ano = $3, disponivel = $4 
+       WHERE id = $5 
+       RETURNING *`,
+            [titulo, autor, ano, disponivel, id]
+        );
+
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ erro: 'Livro não encontrado' });
+        }
+
+        return res.status(200).json(resultado.rows[0]);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ erro: 'Erro ao atualizar livro' });
+    }
+});
+
+app.listen(3333)
+
+
+
+
+
+
+
+
+
+----------------------
+
+
+
+
+
+// Importamos o driver do Postgres
+import pg from 'pg';
+const { Pool } = pg;
+
+// Criamos uma nova instância do Pool de conexões
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'livraria-api',
+  password: 'senai',
+  port: 5433,
+});
+
+export default pool;
